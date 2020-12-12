@@ -31,8 +31,8 @@ getStock();
 setInterval (getStock, 20000)
 
 //Операции с деньгами
-let money = MoneyManager ();
-money.addMoneyCallBack = data => {
+let money = new MoneyManager ();
+money.addMoneyCallback = data => {
     ApiConnector.addMoney(data, response => {
         if(response.success) {
             ProfileWidget.showProfile(response.data);
