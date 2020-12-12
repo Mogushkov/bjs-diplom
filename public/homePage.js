@@ -11,7 +11,11 @@ logout.action = function() {
     })
 }
 //Получение информации о пользователе
-
+ApiConnector.current(response => {
+    if (response.success) {
+        ProfileWidget.showProfile(response.data);
+    }
+})
 //Получение текущих курсов валюты
 
 //Операции с деньгами
