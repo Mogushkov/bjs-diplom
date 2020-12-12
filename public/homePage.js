@@ -17,7 +17,17 @@ ApiConnector.current(response => {
     }
 })
 //Получение текущих курсов валюты
-
+let rates = new RatesBoard();
+function getStock () {
+    ApiConnector.getStock (response => {
+    if (response.success) {
+        rates.clearTable();
+        rates.fillTable(response.data);
+    }
+})
+}
+getStock();
+setInterval (getStock, 20000)
 //Операции с деньгами
 
 //Работа с избранным
