@@ -16,6 +16,7 @@ ApiConnector.current(response => {
         ProfileWidget.showProfile(response.data);
     }
 })
+
 //Получение текущих курсов валюты
 let rates = new RatesBoard();
 function getStock () {
@@ -28,7 +29,21 @@ function getStock () {
 }
 getStock();
 setInterval (getStock, 20000)
+
 //Операции с деньгами
+let money = MoneyManager ();
+money.addMoneyCallBack = data => {
+    ApiConnector.addMoney(data, response => {
+        if(response.success) {
+            ProfileWidget.showProfile(response.data);
+            money.setMessage(response.success, `Ваш счет пополнен`);
+        }
+        else {
+            money.setMessage(response.success, response.error);
+        }
+    })
+};
+
 
 //Работа с избранным
 
