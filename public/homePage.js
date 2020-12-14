@@ -19,18 +19,19 @@ ApiConnector.current(response => {
 
 //Получение текущих курсов валюты
 let rates = new RatesBoard();
-function getStock () {
-    ApiConnector.getStock (response => {
+function getStocks () {
+    ApiConnector.getStocks (response => {
     if (response.success) {
         rates.clearTable();
         rates.fillTable(response.data);
     }
 })
 }
-getStock();
-setInterval (getStock, 20000)
+getStocks();
+setInterval(getStocks, 60000)
 
 //Операции с деньгами
+//пополнение баланса
 let money = new MoneyManager ();
 money.addMoneyCallback = data => {
     ApiConnector.addMoney(data, response => {
@@ -44,6 +45,30 @@ money.addMoneyCallback = data => {
     })
 };
 
+//конвертирование валюты
+moneyManager.conversionMoneyCallback = data => {
+    ApiConnector.convertMoney(data, response => {
+        if (response.success) {
+            ProfileWidget.showProfile(response.data);
+            moneyManager.setMessage(response.success, `Валюта сконвертирована`);
+        }
+        else {
+            moneyManager.setMessage(response.success, response.error);
+        }
+    })
+}
 
+//перевод валюты
+moneyManager.sendMoneyCallback = data => {
+    ApiConnector.transferMoney(data, response => {
+        if (response.success) {
+            ProfileWidget.showProfile(response.data);
+            moneyManager.setMessage(response.success, `Перевод средств выполнен`);
+        }
+        else {
+            moneyManager.setMessage(response.success, response.error);
+        }
+    })
+}
 //Работа с избранным
 
