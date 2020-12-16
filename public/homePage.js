@@ -74,7 +74,7 @@ money.sendMoneyCallback = data => {
 //Работа с избранным
 // начальный список
 let favoritWidget = new FavoritesWidget();
-ApiConnector.getFavorite(response => {
+ApiConnector.getFavorites(response => {
     if (response.success) {
         favoritWidget.clearTable();
         favoritWidget.fillTable(response.data);
