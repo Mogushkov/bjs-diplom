@@ -70,5 +70,49 @@ money.sendMoneyCallback = data => {
         }
     })
 }
+
 //Работа с избранным
+// начальный список
+let favoritWidget = new FavoritesWidget();
+ApiConnector.getFavorite(response => {
+    if (response.success) {
+        favoritWidget.clearTable();
+        favoritWidget.fillTable(response.data);
+        money.updateUsersList(response.data);
+    }
+    else {
+        favoritWidget.setMessage(response.error);
+    }
+});
+
+//добавление Юзера
+favoritWidget.addUserCallback = data => {
+    ApiConnector.addUserToFavorites(data, response => {
+        if (response.success) {
+            favoritWidget.clearTable();
+            favoritWidget.fillTable(response.data);
+            money.updateUsersList(response.data);
+            favoritWidget.setMessage(response.success, "Вы добавили Пользователя");
+        }
+        else {
+            favoritWidget.setMessage(response.success, response.error)
+        }
+    });
+}
+
+//удаление Юзера
+favoritWidget.removeUserCallback = data => {
+    ApiConnector.removeUserFromFavorites(data, response => {
+        if (response.success) {
+            favoritWidget.clearTable();
+            favoritWidget.fillTable(response.data);
+            money.updateUsersList(response.data);
+            favoritWidget.setMessage(response.success, "Вы удалили Пользователя");
+        }
+        else {
+            favoritWidget.setMessage(response.success, response.error)
+        }
+    });
+}
+
 
