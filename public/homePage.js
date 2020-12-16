@@ -46,27 +46,27 @@ money.addMoneyCallback = data => {
 };
 
 //конвертирование валюты
-moneyManager.conversionMoneyCallback = data => {
+money.conversionMoneyCallback = data => {
     ApiConnector.convertMoney(data, response => {
         if (response.success) {
             ProfileWidget.showProfile(response.data);
-            moneyManager.setMessage(response.success, "Валюта сконвертирована");
+            money.setMessage(response.success, "Валюта сконвертирована");
         }
         else {
-            moneyManager.setMessage(response.success, response.error);
+            money.setMessage(response.success, response.error);
         }
     })
 }
 
 //перевод валюты
-moneyManager.sendMoneyCallback = data => {
+money.sendMoneyCallback = data => {
     ApiConnector.transferMoney(data, response => {
         if (response.success) {
             ProfileWidget.showProfile(response.data);
-            moneyManager.setMessage(response.success, "Перевод средств выполнен");
+            money.setMessage(response.success, "Перевод средств выполнен");
         }
         else {
-            moneyManager.setMessage(response.success, response.error);
+            money.setMessage(response.success, response.error);
         }
     })
 }
